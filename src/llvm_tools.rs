@@ -149,8 +149,11 @@ pub fn profraws_to_lcov(
 
 // The sysroot and rustlib functions are coming from https://github.com/rust-embedded/cargo-binutils/blob/a417523fa990c258509696507d1ce05f85dedbc4/src/rustc.rs.
 fn sysroot() -> Result<String, Box<dyn Error>> {
+    println!("sysroot");
     let rustc = env::var_os("RUSTC").unwrap_or_else(|| "rustc".into());
+    println!("rustc {:?}", &rustc);
     let output = Command::new(rustc).arg("--print").arg("sysroot").output()?;
+    println!("output {:?}", output);
     // Note: We must trim() to remove the `\n` from the end of stdout
     Ok(String::from_utf8(output.stdout)?.trim().to_owned())
 }
